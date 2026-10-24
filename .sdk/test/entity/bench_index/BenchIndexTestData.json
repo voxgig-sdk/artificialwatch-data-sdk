@@ -1,0 +1,61 @@
+{
+  "existing": {
+    "bench_index": {
+      "BENCH_INDEX00": {
+        "attribution": "s5a",
+        "description": "s5b",
+        "generatedAt": "s5c",
+        "license": "s5d",
+        "method": "s5e",
+        "models": [],
+        "name": "s60",
+        "sources": [],
+        "url": "s62"
+      },
+      "BENCH_INDEX01": {
+        "attribution": "sb4",
+        "description": "sb5",
+        "generatedAt": "sb6",
+        "license": "sb7",
+        "method": "sb8",
+        "models": [],
+        "name": "sba",
+        "sources": [],
+        "url": "sbc"
+      },
+      "BENCH_INDEX02": {
+        "attribution": "s10e",
+        "description": "s10f",
+        "generatedAt": "s110",
+        "license": "s111",
+        "method": "s112",
+        "models": [],
+        "name": "s114",
+        "sources": [],
+        "url": "s116"
+      }
+    }
+  },
+  "new": {
+    "bench_index": {
+      "bench_index_ref01": {
+        "attribution": "s168",
+        "description": "s169",
+        "generatedAt": "s16a",
+        "license": "s16b",
+        "method": "s16c",
+        "models": [],
+        "name": "s16e",
+        "sources": [],
+        "url": "s170"
+      }
+    }
+  },
+  "requests": {
+    "GET /data/bench-index.json": {
+      "provenance": "operation-contract",
+      "version": 2,
+      "source": "openapi3"
+    }
+  }
+}

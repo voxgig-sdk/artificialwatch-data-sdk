@@ -1,0 +1,22 @@
+# BasicLeadTimeFlow
+
+main: kit: flow: BasicLeadTimeFlow:
+{
+  entity: "lead_time",
+  kind: "basic",
+  name: "BasicLeadTimeFlow",
+  step: [
+    {
+      o: "list",
+      v: [
+        {
+          apply: "ItemExists",
+          def: {
+            ref: "lead_time_ref01"
+          }
+        }
+      ]
+    }
+  ],
+  "key$": "BasicLeadTimeFlow"
+}

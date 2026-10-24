@@ -1,0 +1,30 @@
+# API Information
+
+
+main: {
+  kit: {
+    info: {
+      auth: false
+      contact: {
+        name: "ArtificialWatch"
+        url: "https://artificialwatch.com/data"
+      }
+      description: "Open data files published by ArtificialWatch (artificialwatch.com, Mark Studios, LLC): two AI model leaderboard indexes (Bench Index, Coding Index), a launch lead-time table, and the Wire news feed as RSS. No key, no sign-up, CORS enabled, cached for an hour, rebuilt daily. Documented at https://artificialwatch.com/data; every schema was taken from live GET probes on 2026-10-23. The docs say a request that lands mid-rebuild gets HTTP 503 {\"error\":\"the table is rebuilding\"} (not observed). The keys of a model's scores map are the ids of that file's sources (six boards for the Bench Index, three for the Coding Index on the probe date); a board that does not rate the model has a null score. The CSV twin of each JSON file (same path with .csv) is not modelled. Licence: the composite index and percentiles are CC BY 4.0; raw scores belong to each board. Unverified: whether announced/lead_minutes can be null for an 'excluded' launch (the one excluded row had both)."
+      license: {
+        name: "CC BY 4.0 (index and percentiles)"
+        url: "https://creativecommons.org/licenses/by/4.0/"
+      }
+      servers: [
+        {
+          description: "ArtificialWatch"
+          url: "https://artificialwatch.com"
+        }
+      ]
+      summary: "Open data files published by ArtificialWatch (artificialwatch.com, Mark Studios, LLC): two AI model leaderboard indexes (Bench Index, Coding Index), a launch lead-time table, and the Wire news feed as RSS."
+      title: "ArtificialWatch Data"
+      version: "1.0.0"
+      website: "https://artificialwatch.com"
+    }
+  }
+}
+

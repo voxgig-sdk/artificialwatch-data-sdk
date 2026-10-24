@@ -1,0 +1,429 @@
+{
+  "openapi": "3.0.3",
+  "info": {
+    "title": "ArtificialWatch Data",
+    "version": "1.0.0",
+    "description": "Open data files published by ArtificialWatch (artificialwatch.com, Mark Studios, LLC): two AI model leaderboard indexes (Bench Index, Coding Index), a launch lead-time table, and the Wire news feed as RSS. No key, no sign-up, CORS enabled, cached for an hour, rebuilt daily. Documented at https://artificialwatch.com/data; every schema was taken from live GET probes on 2026-10-23. The docs say a request that lands mid-rebuild gets HTTP 503 {\"error\":\"the table is rebuilding\"} (not observed). The keys of a model's scores map are the ids of that file's sources (six boards for the Bench Index, three for the Coding Index on the probe date); a board that does not rate the model has a null score. The CSV twin of each JSON file (same path with .csv) is not modelled. Licence: the composite index and percentiles are CC BY 4.0; raw scores belong to each board. Unverified: whether announced/lead_minutes can be null for an 'excluded' launch (the one excluded row had both).",
+    "contact": {
+      "name": "ArtificialWatch",
+      "url": "https://artificialwatch.com/data"
+    },
+    "license": {
+      "name": "CC BY 4.0 (index and percentiles)",
+      "url": "https://creativecommons.org/licenses/by/4.0/"
+    }
+  },
+  "servers": [
+    {
+      "url": "https://artificialwatch.com",
+      "description": "ArtificialWatch"
+    }
+  ],
+  "tags": [
+    {
+      "name": "Leaderboard"
+    },
+    {
+      "name": "Launch"
+    },
+    {
+      "name": "Wire"
+    }
+  ],
+  "paths": {
+    "/data/bench-index.json": {
+      "get": {
+        "summary": "Get the Bench Index",
+        "description": "AI models ranked across the public LLM leaderboards, best first (42 models over 6 boards in the probe).",
+        "operationId": "getBenchIndex",
+        "tags": [
+          "Leaderboard"
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Leaderboard"
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "The table is rebuilding; retry a minute later.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/data/coding-index.json": {
+      "get": {
+        "summary": "Get the Coding Index",
+        "description": "AI models ranked across the public coding leaderboards, best first (40 models over 3 boards in the probe).",
+        "operationId": "getCodingIndex",
+        "tags": [
+          "Leaderboard"
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Leaderboard"
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "The table is rebuilding; retry a minute later.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/data/lead-time.json": {
+      "get": {
+        "summary": "Get launch lead times",
+        "description": "Every model launch since July 2026 with ArtificialWatch's first-seen time, the lab's announcement time and the gap in minutes.",
+        "operationId": "getLeadTime",
+        "tags": [
+          "Launch"
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/LeadTime"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/wire/feed": {
+      "get": {
+        "summary": "Get the Wire RSS feed",
+        "description": "AI model launches, leaks and news, newest first: the latest 50 items as RSS 2.0 XML.",
+        "operationId": "getWireFeed",
+        "tags": [
+          "Wire"
+        ],
+        "responses": {
+          "200": {
+            "description": "RSS 2.0 document",
+            "content": {
+              "application/rss+xml": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "Leaderboard": {
+        "type": "object",
+        "description": "A composite leaderboard index file (Bench Index or Coding Index; both share this shape).",
+        "properties": {
+          "name": {
+            "type": "string",
+            "example": "ArtificialWatch Bench Index"
+          },
+          "description": {
+            "type": "string"
+          },
+          "url": {
+            "type": "string",
+            "description": "Page that shows the table.",
+            "example": "https://artificialwatch.com/benchmarks"
+          },
+          "generatedAt": {
+            "type": "string",
+            "format": "date-time",
+            "example": "2026-10-23T14:11:55.552Z"
+          },
+          "license": {
+            "type": "string",
+            "description": "Licence URL.",
+            "example": "https://creativecommons.org/licenses/by/4.0/"
+          },
+          "attribution": {
+            "type": "string"
+          },
+          "method": {
+            "type": "string",
+            "description": "How the index is computed."
+          },
+          "sources": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Board"
+            }
+          },
+          "models": {
+            "type": "array",
+            "description": "One entry per model, best first.",
+            "items": {
+              "$ref": "#/components/schemas/RankedModel"
+            }
+          }
+        },
+        "required": [
+          "name",
+          "description",
+          "url",
+          "generatedAt",
+          "license",
+          "attribution",
+          "method",
+          "sources",
+          "models"
+        ]
+      },
+      "Board": {
+        "type": "object",
+        "description": "A leaderboard the index reads.",
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "Board id; also the key in RankedModel.scores.",
+            "example": "livebench"
+          },
+          "name": {
+            "type": "string",
+            "example": "LiveBench"
+          },
+          "url": {
+            "type": "string"
+          },
+          "scale": {
+            "type": "string",
+            "description": "What the board's raw score measures.",
+            "example": "global average (0-100)"
+          },
+          "asOf": {
+            "type": "string",
+            "format": "date-time",
+            "description": "The board's own as-of time."
+          }
+        },
+        "required": [
+          "id",
+          "name",
+          "url",
+          "scale",
+          "asOf"
+        ]
+      },
+      "RankedModel": {
+        "type": "object",
+        "properties": {
+          "rank": {
+            "type": "integer",
+            "example": 1
+          },
+          "id": {
+            "type": "string",
+            "example": "opus-next"
+          },
+          "name": {
+            "type": "string",
+            "example": "Claude Opus 5.5"
+          },
+          "vendor": {
+            "type": "string",
+            "example": "Anthropic"
+          },
+          "index": {
+            "type": "number",
+            "description": "Composite index: the median of the model's percentiles across the boards that rate it.",
+            "example": 100
+          },
+          "boards": {
+            "type": "integer",
+            "description": "How many boards rate the model."
+          },
+          "scores": {
+            "type": "object",
+            "description": "Score per board, keyed by Board.id; null when the board does not rate the model.",
+            "additionalProperties": {
+              "allOf": [
+                {
+                  "$ref": "#/components/schemas/BoardScore"
+                }
+              ],
+              "nullable": true
+            }
+          },
+          "page": {
+            "type": "string",
+            "description": "The model's page on ArtificialWatch."
+          }
+        },
+        "required": [
+          "rank",
+          "id",
+          "name",
+          "vendor",
+          "index",
+          "boards",
+          "scores",
+          "page"
+        ]
+      },
+      "BoardScore": {
+        "type": "object",
+        "properties": {
+          "raw": {
+            "type": "number",
+            "description": "The board's own score."
+          },
+          "percentile": {
+            "type": "number",
+            "description": "Percentile among the models ArtificialWatch maps on that board."
+          }
+        },
+        "required": [
+          "raw",
+          "percentile"
+        ]
+      },
+      "LeadTime": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "url": {
+            "type": "string"
+          },
+          "license": {
+            "type": "string"
+          },
+          "attribution": {
+            "type": "string"
+          },
+          "method": {
+            "type": "string"
+          },
+          "temporalCoverage": {
+            "type": "string",
+            "description": "ISO 8601 date interval.",
+            "example": "2026-07-24/2026-10-19"
+          },
+          "counted": {
+            "type": "integer",
+            "description": "Launches counted (excluded rows are not)."
+          },
+          "liveBeforeAnnouncement": {
+            "type": "integer",
+            "description": "Counted launches seen live before their announcement."
+          },
+          "launches": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Launch"
+            }
+          }
+        },
+        "required": [
+          "name",
+          "url",
+          "license",
+          "attribution",
+          "method",
+          "temporalCoverage",
+          "counted",
+          "liveBeforeAnnouncement",
+          "launches"
+        ]
+      },
+      "Launch": {
+        "type": "object",
+        "properties": {
+          "model": {
+            "type": "string",
+            "example": "MiniMax M3.1 Flash"
+          },
+          "lab": {
+            "type": "string",
+            "example": "MiniMax"
+          },
+          "first_seen": {
+            "type": "string",
+            "format": "date-time",
+            "description": "When the sweep first found the model live on an API."
+          },
+          "announced": {
+            "type": "string",
+            "format": "date-time",
+            "description": "The lab's own announcement time."
+          },
+          "lead_minutes": {
+            "type": "number",
+            "description": "announced minus first_seen in minutes; positive means live before the announcement."
+          },
+          "outcome": {
+            "type": "string",
+            "description": "Values seen: after, before, excluded.",
+            "example": "before"
+          },
+          "announcement_source": {
+            "type": "string"
+          },
+          "announcement_url": {
+            "type": "string"
+          },
+          "note": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "required": [
+          "model",
+          "lab",
+          "first_seen",
+          "announced",
+          "lead_minutes",
+          "outcome",
+          "announcement_source",
+          "announcement_url",
+          "note"
+        ]
+      },
+      "ApiError": {
+        "type": "object",
+        "properties": {
+          "error": {
+            "type": "string",
+            "example": "the table is rebuilding"
+          }
+        },
+        "required": [
+          "error"
+        ]
+      }
+    }
+  }
+}

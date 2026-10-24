@@ -1,0 +1,106 @@
+# Entity: lead_time
+
+main: kit: entity: lead_time: {
+
+  alias: field: {}
+
+  fields: {
+    announced: {
+      fo: "date-time"
+      h: "Announced"
+      n: "announced"
+      r: true
+      sh: "The lab's own announcement time."
+      t: "`$STRING`"
+    }
+    announcement_source: {
+      h: "Announcement Source"
+      n: "announcement_source"
+      r: true
+      t: "`$STRING`"
+    }
+    announcement_url: {
+      h: "Announcement Url"
+      n: "announcement_url"
+      r: true
+      t: "`$STRING`"
+    }
+    first_seen: {
+      fo: "date-time"
+      h: "First Seen"
+      n: "first_seen"
+      r: true
+      sh: "When the sweep first found the model live on an API."
+      t: "`$STRING`"
+    }
+    lab: {
+      h: "Lab"
+      n: "lab"
+      r: true
+      t: "`$STRING`"
+    }
+    lead_minutes: {
+      h: "Lead Minutes"
+      n: "lead_minutes"
+      r: true
+      sh: "announced minus first_seen in minutes; positive means live before the announcement."
+      t: "`$NUMBER`"
+    }
+    model: {
+      h: "Model"
+      n: "model"
+      r: true
+      t: "`$STRING`"
+    }
+    note: {
+      h: "Note"
+      n: "note"
+      r: true
+      t: "`$STRING`"
+    }
+    outcome: {
+      h: "Outcome"
+      n: "outcome"
+      r: true
+      sh: "Values seen: after, before, excluded."
+      t: "`$STRING`"
+    }
+  }
+
+  name: "lead_time"
+  op: {
+    list: {
+      name: "list"
+      points: [
+        {
+          co: {
+            id: "GET /data/lead-time.json"
+            source: "openapi3"
+            version: 2
+          }
+          m: "GET"
+          o: "/data/lead-time.json"
+          rs: {
+            kind: "json"
+            media: "application/json"
+          }
+          s: [
+            {
+              lit: "data"
+            }
+            {
+              lit: "lead-time.json"
+            }
+          ]
+          t: {
+            req: "`reqdata`"
+            res: "`body.launches`"
+          }
+        }
+      ]
+    }
+  }
+
+
+
+}

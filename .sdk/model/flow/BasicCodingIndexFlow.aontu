@@ -1,0 +1,22 @@
+# BasicCodingIndexFlow
+
+main: kit: flow: BasicCodingIndexFlow:
+{
+  entity: "coding_index",
+  kind: "basic",
+  name: "BasicCodingIndexFlow",
+  step: [
+    {
+      o: "list",
+      v: [
+        {
+          apply: "ItemExists",
+          def: {
+            ref: "coding_index_ref01"
+          }
+        }
+      ]
+    }
+  ],
+  "key$": "BasicCodingIndexFlow"
+}

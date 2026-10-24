@@ -1,0 +1,28 @@
+# BasicWireFlow
+
+main: kit: flow: BasicWireFlow:
+{
+  entity: "wire",
+  kind: "basic",
+  name: "BasicWireFlow",
+  step: [
+    {
+      i: {
+        ref: "wire_ref01",
+        srcdatavar: "wire_ref01_data",
+        suffix: "_dt0"
+      }
+
+      o: "load",
+      v: [
+        {
+          apply: "TextFieldMark",
+          def: {
+            mark: "Mark01-wire_ref01"
+          }
+        }
+      ]
+    }
+  ],
+  "key$": "BasicWireFlow"
+}

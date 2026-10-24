@@ -1,0 +1,49 @@
+# Entity: wire
+
+main: kit: entity: wire: {
+
+  alias: field: {}
+
+  name: "wire"
+  op: {
+    load: {
+      name: "load"
+      points: [
+        {
+          co: {
+            id: "GET /wire/feed"
+            source: "openapi3"
+            version: 2
+          }
+          m: "GET"
+          o: "/wire/feed"
+          q: {
+            "$action": "feed"
+          }
+          rs: {
+            kind: "raw"
+            media: "application/rss+xml"
+          }
+          s: [
+            {
+              lit: "wire"
+            }
+            {
+              lit: "feed"
+            }
+          ]
+          t: {
+            req: "`reqdata`"
+            res: "`body`"
+          }
+        }
+      ]
+    }
+  }
+
+  fields: {
+  }
+
+
+
+}

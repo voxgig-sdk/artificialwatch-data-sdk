@@ -1,0 +1,37 @@
+# Generated from the API definition and overwritten on every build: do not
+# edit this file. Put customizations in the guide entry file, which includes
+# this one and overrides its defaults:
+#   guide.aontu
+
+guide: {
+  metrics: count: entity: 4
+  metrics: count: path: 4
+  metrics: count: method: 4
+
+  entity: bench_index: {
+    path: "/data/bench-index.json": {
+      op: list: method: *GET
+    }
+  }
+
+  entity: coding_index: {
+    path: "/data/coding-index.json": {
+      op: list: method: *GET
+    }
+  }
+
+  entity: lead_time: {
+    path: "/data/lead-time.json": {
+      op: list: method: *GET
+      op: list: transform: res: *("`body.launches`")|top
+    }
+  }
+
+  entity: wire: {
+    path: "/wire/feed": {
+      action: "feed": {}
+      op: load: method: *GET
+    }
+  }
+
+}

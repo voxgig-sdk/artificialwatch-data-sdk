@@ -1,0 +1,22 @@
+# BasicBenchIndexFlow
+
+main: kit: flow: BasicBenchIndexFlow:
+{
+  entity: "bench_index",
+  kind: "basic",
+  name: "BasicBenchIndexFlow",
+  step: [
+    {
+      o: "list",
+      v: [
+        {
+          apply: "ItemExists",
+          def: {
+            ref: "bench_index_ref01"
+          }
+        }
+      ]
+    }
+  ],
+  "key$": "BasicBenchIndexFlow"
+}

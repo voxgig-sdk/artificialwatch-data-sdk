@@ -1,0 +1,105 @@
+# Entity: bench_index
+
+main: kit: entity: bench_index: {
+
+  alias: field: {}
+
+  fields: {
+    attribution: {
+      h: "Attribution"
+      n: "attribution"
+      r: true
+      t: "`$STRING`"
+    }
+    description: {
+      h: "Description"
+      n: "description"
+      r: true
+      t: "`$STRING`"
+    }
+    generatedAt: {
+      fo: "date-time"
+      h: "Generated At"
+      n: "generatedAt"
+      r: true
+      t: "`$STRING`"
+    }
+    license: {
+      h: "License"
+      n: "license"
+      r: true
+      sh: "Licence URL."
+      t: "`$STRING`"
+    }
+    method: {
+      h: "Method"
+      n: "method"
+      r: true
+      sh: "How the index is computed."
+      t: "`$STRING`"
+    }
+    models: {
+      h: "Models"
+      n: "models"
+      r: true
+      sh: "One entry per model, best first."
+      t: "`$ARRAY`"
+    }
+    name: {
+      h: "Name"
+      n: "name"
+      r: true
+      t: "`$STRING`"
+    }
+    sources: {
+      h: "Sources"
+      n: "sources"
+      r: true
+      t: "`$ARRAY`"
+    }
+    url: {
+      h: "Url"
+      n: "url"
+      r: true
+      sh: "Page that shows the table."
+      t: "`$STRING`"
+    }
+  }
+
+  name: "bench_index"
+  op: {
+    list: {
+      name: "list"
+      points: [
+        {
+          co: {
+            id: "GET /data/bench-index.json"
+            source: "openapi3"
+            version: 2
+          }
+          m: "GET"
+          o: "/data/bench-index.json"
+          rs: {
+            kind: "json"
+            media: "application/json"
+          }
+          s: [
+            {
+              lit: "data"
+            }
+            {
+              lit: "bench-index.json"
+            }
+          ]
+          t: {
+            req: "`reqdata`"
+            res: "`body`"
+          }
+        }
+      ]
+    }
+  }
+
+
+
+}

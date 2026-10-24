@@ -1,0 +1,27 @@
+{
+  "existing": {
+    "wire": {
+      "WIRE00": {
+        "id": "WIRE00"
+      },
+      "WIRE01": {
+        "id": "WIRE01"
+      },
+      "WIRE02": {
+        "id": "WIRE02"
+      }
+    }
+  },
+  "new": {
+    "wire": {
+      "wire_ref01": {}
+    }
+  },
+  "requests": {
+    "GET /wire/feed": {
+      "provenance": "operation-contract",
+      "version": 2,
+      "source": "openapi3"
+    }
+  }
+}

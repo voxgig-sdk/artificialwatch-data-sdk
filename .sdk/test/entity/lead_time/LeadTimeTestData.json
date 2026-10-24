@@ -1,0 +1,61 @@
+{
+  "existing": {
+    "lead_time": {
+      "LEAD_TIME00": {
+        "announced": "s5a",
+        "announcement_source": "s5b",
+        "announcement_url": "s5c",
+        "first_seen": "s5d",
+        "lab": "s5e",
+        "lead_minutes": 95,
+        "model": "s60",
+        "note": "s61",
+        "outcome": "s62"
+      },
+      "LEAD_TIME01": {
+        "announced": "sb4",
+        "announcement_source": "sb5",
+        "announcement_url": "sb6",
+        "first_seen": "sb7",
+        "lab": "sb8",
+        "lead_minutes": 185,
+        "model": "sba",
+        "note": "sbb",
+        "outcome": "sbc"
+      },
+      "LEAD_TIME02": {
+        "announced": "s10e",
+        "announcement_source": "s10f",
+        "announcement_url": "s110",
+        "first_seen": "s111",
+        "lab": "s112",
+        "lead_minutes": 275,
+        "model": "s114",
+        "note": "s115",
+        "outcome": "s116"
+      }
+    }
+  },
+  "new": {
+    "lead_time": {
+      "lead_time_ref01": {
+        "announced": "s168",
+        "announcement_source": "s169",
+        "announcement_url": "s16a",
+        "first_seen": "s16b",
+        "lab": "s16c",
+        "lead_minutes": 365,
+        "model": "s16e",
+        "note": "s16f",
+        "outcome": "s170"
+      }
+    }
+  },
+  "requests": {
+    "GET /data/lead-time.json": {
+      "provenance": "operation-contract",
+      "version": 2,
+      "source": "openapi3"
+    }
+  }
+}
